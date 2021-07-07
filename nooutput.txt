@@ -1,0 +1,112 @@
+package Bank;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import inheritances.thiskeywordconstructor;
+
+class Banking
+{
+	
+	String Bankid;
+	String BankName;
+	String BankCity;
+	public Banking(String Bankid,String BankName,String BankCity)
+	{
+		this.Bankid = Bankid;
+		this.BankName = BankName;
+		this.BankCity  = BankCity;
+	}
+}
+class Customer extends Banking
+{
+	static int count=0;
+	String cust_name;
+	String acc_type;
+	String city;
+	double deposit=0;
+	double balance=0;
+	String accountid = "Wiley"+count;
+	public Customer(Banking b,String cust_name,String typeofacc,String city,double depo) {
+		super(b.Bankid, b.BankName, b.BankCity);
+		this.cust_name = cust_name;
+		this.acc_type = typeofacc;
+		this.city = city;
+		this.balance = depo;
+		
+		
+	}
+	
+	
+	
+	
+}
+public class Banks {
+	
+	
+
+	public static void main(String[] args) {
+		
+	while(true)
+	{
+		
+		List<Customer> l = new ArrayList<>();
+		System.out.println("1.creata a account\n2.Updating \n3.Bank balance \n4.Details");
+		Banking b1 = new Banking("100","MyBank","Chennai");
+		Scanner sc = new Scanner(System.in);
+		int option = sc.nextInt();
+		int typeofacc=0;
+		double depo=0;
+	
+		String name=null,acctype,acity;
+		switch(option)
+		{
+		case 1 : System.out.println("Please enter the following details to create your account");
+				 System.out.println("Enter your name");
+				 name = sc.next();
+				 sc.nextLine();
+				
+				 System.out.println("Enter your city");
+				 acity = sc.nextLine();
+				 System.out.println("Enter whether you want saving or current account savings = 1 or current =0");
+				 typeofacc = sc.nextInt();
+				 sc.nextLine();
+				 if(typeofacc==0)
+				 {
+					 System.out.println("Creating current account");
+					 acctype = "current";
+					 
+				 }
+				 else
+				 {
+					System.out.println("Creating savings account");
+					 acctype="savings";
+				 }
+				 System.out.println("You have to deposit a minimum ammount of Rs.500");
+				 depo = sc.nextDouble();
+				 l.add(new Customer(b1,name,acctype,acity,depo));
+
+				 Customer.count++;
+				 
+				 System.out.println("Account created successfully!!!");
+				 for(int i=0;i<l.size();i++)
+					{
+						System.out.println(l.get(i).accountid+" "+l.get(i).balance);
+						
+					}
+				 
+				   
+				break;
+		case 2: 
+			break;
+		case 3:break;
+		case 4:break;
+		
+		}
+		
+	}
+
+	}
+
+}
