@@ -1,0 +1,21 @@
+Two entities : Customer -(customer id,name,city,bid,bname,bcity,type of account)
+	       Bank -bankid,bank name ,bank city
+
+options for creation of account or balance enquiry or updating bank balance(adding or takin out money etc)
+creation of account: 
+1)Initially Customer should create a bank account in bank -current,savings account
+2)initial deposit amount >500
+3)account succesfully created - account number generated and stored 
+
+updating bank balance
+1)checking whether user is existing user or not
+2)if yes : depositing or withdrawl
+depositing : should not deposit more than 1 lakh at a single go
+withdrawl - should not be greater than bank balance and not greater than 50,000
+
+checking bank balance
+1)entering account id - if exists then displaying the bank balance else no user exists
+
+account details
+1)entering account id - if exists entire customer info is shown else no user exists
+
