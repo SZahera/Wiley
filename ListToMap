@@ -63,7 +63,7 @@ class ListToMaps implements Runnable{
 		HashMap<Customer, Projects1> hmap = new HashMap<>();
 		for(Customer c :ListToMap.l)
 		{
-			System.out.println(c);
+			
 			hmap.put(c, c.project);
 		}
 		for(Customer c:hmap.keySet())
