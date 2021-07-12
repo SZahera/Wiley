@@ -1,0 +1,76 @@
+package inheritances;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+public class ListToMap extends Thread{
+  
+	static  List<Customer> l = new ArrayList<>();
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		
+		Projects1 p1 = new Projects1(1,"ml");
+		Projects1 p2 = new Projects1(2,"dl");
+		l.add(new Customer("1","shifa",p1));
+		l.add(new Customer("2","zara",p2));
+		l.add(new Customer("3","aabid",p1));
+		System.out.println(l.getClass());
+		ListToMaps a = new ListToMaps();
+		Thread t11 = new Thread(a);
+		t11.start();
+		
+
+	}
+
+}
+class Customer
+{
+	String id ;
+	String name;
+	Projects1 project;
+	public Customer(String id,String name,Projects1 project)
+	{
+		this.id = id;
+		this.name = name;
+		this.project = project;
+		
+	}
+	public String toString()
+	{
+		return id+" "+name+" ";
+	}
+}
+class Projects1
+{
+	int id;
+	String name;
+	public Projects1(int id,String name)
+	{
+		this.id = id;
+		this.name = name;
+	}
+	public String toString()
+	{
+		return id+" "+name;
+	}
+	
+}
+
+class ListToMaps implements Runnable{
+	public void run() {
+		HashMap<Customer, Projects1> hmap = new HashMap<>();
+		for(Customer c :ListToMap.l)
+		{
+			System.out.println(c);
+			hmap.put(c, c.project);
+		}
+		for(Customer c:hmap.keySet())
+		{
+			System.out.println(c+" "+hmap.get(c));
+		}
+		
+		
+	}
+}
