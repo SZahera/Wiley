@@ -1,0 +1,76 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class threadclass {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		System.out.println(Thread.currentThread().getName()+" "+Thread.currentThread().getPriority());
+		Thread t1  = new Thread("shifa");
+		Thread t2 = new Thread("zahera");
+		//System.out.println(t1.getPriority()+" "+t2.getPriority());
+		t1.setPriority(6);
+		t2.setPriority(9);
+		//System.out.println(t1.getPriority()+" "+t2.getPriority());
+        //System.out.println(t1.isDaemon());
+        t1.setDaemon(true);
+        t1.start();
+        
+        t2.start();
+        //System.out.println(t1.isDaemon());
+        sample1 s1 = new sample1();
+       
+       
+        sample1 s2 = new sample1();
+        sample1 s3 = new sample1();
+        s2.setName("second");
+        s1.setName("first");
+        s3.setName("Third");
+       
+        s1.start();
+        s2.start();
+        s3.start();
+
+        sample2 o1 = new sample2();
+        Thread t11 = new Thread(o1);
+        Thread t21 = new Thread(o1);
+        t11.start();
+        t21.start();
+		
+
+	}
+
+}
+class sample1 extends Thread{
+	public void run()
+	{
+		System.out.println(Thread.currentThread().getName()+" "+Thread.currentThread().getId());
+	}
+
+
+
+}
+
+
+class sample2 implements Runnable{
+
+    private List<Integer> integers = Collections.emptyList();
+    static int i=100;
+    @Override
+    public void run() {
+        integers = new ArrayList<>();
+
+        for (i = 100; i > 0 ; i--) {
+        	
+            integers.add(i);
+            try {
+                Thread.sleep(1000);
+            }catch (InterruptedException inEx){
+                System.err.println(inEx);
+            }
+
+            System.out.println(Thread.currentThread().getName() + " ---- "+i);
+        }
+    }
+}
