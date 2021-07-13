@@ -1,0 +1,77 @@
+package inheritances;
+
+public class FibThread {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Fib n1 = new Fib();
+		Thread t1  =new Thread(n1);
+		t1.start();
+		System.out.println("This is the first task");
+		
+		
+		Fib1 n2 = new Fib1();
+		Thread t2  =new Thread(n2);
+		t2.start();
+		
+		
+		
+
+	}
+
+}
+
+class Fib1 implements Runnable{
+		int prev =0;
+		int next1 =1;
+		int sum=0,sum1=0,oldsum=0,newsum=0;
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		System.out.println("This is the second task");
+		System.out.println("[");
+			int prev=0,next=1,sum=0;
+	       int temp;
+	        for(int i=0;i<10;i++)
+	        {
+		        	temp=next;
+		        	next=prev+next;
+		        	prev=temp;
+		        	
+		        	System.out.println(sum+" + "+prev+" = "+(sum+prev));
+		        	sum=sum+prev;
+	        }
+		
+		
+		
+		System.out.print("]");
+		
+		
+		
+	}
+	
+}
+
+class Fib implements  Runnable {
+	int n=10,first=1,second=1,sum=0;
+	
+	public void run() {
+		System.out.print(first+"+"+second);
+		sum = first+second;
+		System.out.print("+"+sum);
+
+		for(int i=3;i<n;i++)
+		{
+			first=second;
+			second = sum;
+			sum = first+second;
+			System.out.print("+"+sum);
+		}
+		first=second;
+		second = sum;
+		sum = first+second;
+		System.out.println("="+sum);
+		System.out.println("-----------------------");
+		
+	}
+}
