@@ -1,0 +1,127 @@
+package inheritances;
+
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.*;
+
+public class executorssclass {
+	public static void main(String[] args) throws InterruptedException {
+//		MyExecutor m1 = new MyExecutor();
+//		Thread t1 = new Thread(m1);
+//		t1.start();
+//		Thread t2 = new Thread(m1);
+//		t2.start();
+		//--------------------------------------------------------//
+//		MyExecutor m1 = new MyExecutor();
+//		MyExecutor m2 = new MyExecutor();
+//		MyExecutor m3 = new MyExecutor();
+//		MyExecutor m4 = new MyExecutor();
+//		MyExecutor m5 = new MyExecutor();
+//		MyExecutor m6 = new MyExecutor();
+//		MyExecutor m7 = new MyExecutor();
+//		Conclusion
+//		newSingleThreadExecutor will create only thread how many services are initialized
+//		newCachedThreadPool will craete as many as it is required
+//		newFixedThreadPool will create the threads that number of threads we want and executes all the services available
+
+
+//		ExecutorService es = Executors.newFixedThreadPool(3);
+//		es.execute(m1);
+//		es.execute(m2);
+//		es.execute(m3);
+//		es.execute(m4);
+//		es.execute(m5);
+//		es.execute(m6);
+//		es.execute(m7);
+		List<Integer> arr = new ArrayList<Integer>();
+		int n=10;
+		ExecutorService es = Executors.newFixedThreadPool(1);
+		MyExecutionusing service = new MyExecutionusing(n,arr);
+		Future<List<Integer>> callFuture = es.submit(service);// task 1
+		Thread.sleep(100);
+		try
+		{
+			if(callFuture.isDone())
+			{
+				System.out.println(callFuture.get());
+			}
+		}catch(Exception ae)
+		{
+			System.out.println(ae);
+		}
+    es.shutdown();
+	}
+
+}
+
+class MyExecutionusing implements Callable <List<Integer>>
+{
+	int n;
+	List<Integer> l;
+
+	MyExecutionusing(int n,List <Integer>l)
+	{
+		this.n = n;
+		this.l = l;
+	}
+	
+	@Override
+	public  List<Integer> call() throws Exception {
+		
+		// TODO Auto-generated method stub
+		int first = 1;
+		int second = 1;
+		int sum = first+second;
+		l.add(first);
+		l.add(second);
+		l.add(sum);
+		for(int i=3;i<=n;i++)
+		{
+			first = second;
+			second = sum;
+			sum = first+second;
+			l.add(sum);
+		
+		}
+		System.out.println("The final sum :"+sum);
+		return l;
+    
+		
+	}
+	
+}
+
+
+class MyExecutor implements Runnable
+{
+	void process()
+	
+	{
+		int count=0;
+		for(int i=0;i<5;i++)
+		{
+			try {
+				Thread.sleep(1000);
+				
+			}catch(Exception ae)
+			{
+				System.out.println(ae);
+			}
+			System.out.println(Thread.currentThread().getName()+" "+i);
+			
+			
+		}
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		process();
+		
+	}
+	
+}
+
