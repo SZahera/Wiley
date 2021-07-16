@@ -1,0 +1,100 @@
+import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.*;
+public class Database {
+	static Map <Integer, My> mp= new HashMap<>();
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		My m1 = new My(1,"shifa",2000.0);
+		My m2 = new My(2,"zara",2900.0);
+		My m3 = new My(3,"aadil",21000.0);
+		mp.put(1, m1);
+		mp.put(2, m2);
+		mp.put(3, m3);
+		CRUD c1 = new CRUD();
+		c1.remove(mp);
+		c1.update(mp);
+		c1.display(mp);
+
+	}
+	
+
+}
+
+
+
+class My 
+{
+	int id;
+	String name;
+	Double bal;
+	public My(int id,String name,Double bal)
+	{
+		this.bal = bal;
+		this.id = id;
+		this.name = name;
+	}
+	public String toString()
+	{
+		return name+" "+bal+" "+id;
+		
+	}
+}
+
+
+class CRUD 
+{
+	
+	Map<Integer,My> update(Map<Integer,My> mp) {
+		 
+	Scanner sc= new Scanner(System.in);
+	int n = sc.nextInt();
+	String name = sc.next();
+	for(Map.Entry<Integer, My> me : mp.entrySet())
+	{
+		if(me.getKey()==n)
+		{
+			me.getValue().name = name;
+		}
+	}
+	return mp;
+
+
+	}
+	Map<Integer,My>remove(Map<Integer,My> mp)
+	{
+		Scanner sc= new Scanner(System.in);
+		int n = sc.nextInt();
+		int flag=0;
+		for(Map.Entry<Integer, My> me : mp.entrySet())
+		{
+			if(me.getKey()==n)
+			{
+				System.out.println("User is being deleted");
+				flag=1;
+				break;
+			}
+		}
+		if(flag==0)
+		{
+			System.out.println("No user exists with that id");
+		}
+		else
+		{
+			mp.remove(n);
+		}
+		
+		return mp;
+	}
+	void display(Map<Integer,My>mp)
+	{
+		for(Map.Entry<Integer, My> me : mp.entrySet())
+		{
+			System.out.println(me.toString());
+		}
+		
+	}
+	
+
+}
