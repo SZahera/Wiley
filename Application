@@ -1,0 +1,245 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDate;
+import java.util.Scanner;
+
+import com.mysql.cj.jdbc.result.ResultSetMetaData;
+
+public class JavaApp {
+
+	public static void main(String[] args) throws SQLException {
+		// TODO Auto-generated method stub
+		Scanner sc= new Scanner(System.in);
+		String query,name,location,country_name,name1,dept;
+		ResultSet rs;
+		ResultSetMetaData rsmd;
+		int a=0,id=0,a1,manager_id=0;
+		int columnsNumber;
+		String url = "jdbc:mysql://localhost:3306/shifa";
+		Connection conn = DriverManager.getConnection(url,"root","shifa");
+		Statement st = conn.createStatement();
+		while(true)
+		{
+			System.out.println("1.Display\n2.Search\n3.Adding an employee\n4.Modifying a record\n5.exit");
+			a1 = sc.nextInt();
+			switch(a1)
+			{
+			case 1 :  query = "select * from employees;";
+					  rs = st.executeQuery(query);
+					 rsmd = (ResultSetMetaData) rs.getMetaData();
+					  columnsNumber = rsmd.getColumnCount();
+					   while (rs.next()) {
+					       for (int i = 1; i <= columnsNumber; i++) {
+					           if (i > 1) System.out.print(",  ");
+					           String columnValue = rs.getString(i);
+					           System.out.print(columnValue);
+					       }
+					       System.out.println("");
+					   }
+					  
+					  break;
+			case 2 : System.out.println("Searching an employee by\n1.Id\n2.Name\n3.Location\n4.ManagerId\n5.Country\n6.Department");
+					  a = sc.nextInt();
+					  sc.nextLine();
+					  if(a==1)
+					  {
+						  id = sc.nextInt();
+						  sc.nextLine();
+						  query = "select * from employees where employee_id ="+id+" ";
+						  rs = st.executeQuery(query);
+						  rsmd = (ResultSetMetaData) rs.getMetaData();
+						  // System.out.println("querying SELECT * FROM XXX");
+						   columnsNumber = rsmd.getColumnCount();
+						   while (rs.next()) {
+						       for (int i = 1; i <= columnsNumber; i++) {
+						           if (i > 1) System.out.print(",  ");
+						           String columnValue = rs.getString(i);
+						           System.out.print(columnValue);
+						       }
+						       System.out.println("");
+						   }
+						  
+						  
+					  }
+					  else if (a==2)
+					  {
+						  name1 = sc.next();
+						 
+						  query = "select * from employees where lower(first_name) ='"+name1+"'";
+						 // +name1;
+						  rs = st.executeQuery(query);
+						  rsmd = (ResultSetMetaData) rs.getMetaData();
+						  // System.out.println("querying SELECT * FROM XXX");
+						   columnsNumber = rsmd.getColumnCount();
+						   while (rs.next()) {
+						       for (int i = 1; i <= columnsNumber; i++) {
+						           if (i > 1) System.out.print(",  ");
+						           String columnValue = rs.getString(i);
+						           System.out.print(columnValue);
+						       }
+						       System.out.println("");
+						   }
+						  
+					  }
+					  else if(a==3)
+					  {
+						  System.out.println("enter the location");
+						  
+						  location = sc.nextLine();
+						  query = "select * from employees where employees.department_id in(select department_id from departments where location_id in (select location_id  from locations where locations.city = '"+location+"'));";
+						  
+						  rs = st.executeQuery(query);
+						  rsmd = (ResultSetMetaData) rs.getMetaData();
+						  
+						   columnsNumber = rsmd.getColumnCount();
+						   while (rs.next()) {
+						       for (int i = 1; i <= columnsNumber; i++) {
+						           if (i > 1) System.out.print(",  ");
+						           String columnValue = rs.getString(i);
+						           System.out.print(columnValue);
+						       }
+						       System.out.println("");
+						   }
+					  }
+					  else if(a==4)
+					  {
+						  manager_id = sc.nextInt();
+						  sc.nextLine();
+						  query = "select * from employees where manager_id="+manager_id;
+						  rs = st.executeQuery(query);
+						  rsmd = (ResultSetMetaData) rs.getMetaData();
+						   columnsNumber = rsmd.getColumnCount();
+						   while (rs.next()) {
+						       for (int i = 1; i <= columnsNumber; i++) {
+						           if (i > 1) System.out.print(",  ");
+						           String columnValue = rs.getString(i);
+						           System.out.print(columnValue);
+						       }
+						       System.out.println("");
+						   }
+						  
+				     }
+					  else if(a==5)
+					  {
+						  country_name = sc.nextLine();
+						  query = "select * from employees where employees.department_id in(select department_id from departments where location_id in (select location_id  from locations where locations.country_id in(select country_id from countries where country_name=+'"+country_name+"')))";
+								 
+						  rs = st.executeQuery(query);
+						  rsmd = (ResultSetMetaData) rs.getMetaData();
+						   columnsNumber = rsmd.getColumnCount();
+						   while (rs.next()) {
+						       for (int i = 1; i <= columnsNumber; i++) {
+						           if (i > 1) System.out.print(",  ");
+						           String columnValue = rs.getString(i);
+						           System.out.print(columnValue);
+						       }
+						       System.out.println("");
+						   }
+						  		
+					  }
+					  else if(a==6)
+					  {
+						  
+						  dept = sc.next();
+						  
+	query = " select * from employees where department_id in (select department_id from departments where department_name =+'"+dept+"')";
+		
+						
+						  rs = st.executeQuery(query);
+						  rsmd = (ResultSetMetaData) rs.getMetaData();
+						
+						   columnsNumber = rsmd.getColumnCount();
+						   while (rs.next()) {
+						       for (int i = 1; i <= columnsNumber; i++) {
+						           if (i > 1) System.out.print(",  ");
+						           String columnValue = rs.getString(i);
+						           System.out.print(columnValue);
+						       }
+						       System.out.println("");
+						   } 
+					  }
+					  else
+					  {
+						  System.out.println("Invalid option");
+					  }
+					  break;
+			case 3 :System.out.println("Enter the details\n1.id\t2.firstname\t3.lastname\t4.email\t5.phn\t6.jid\t7.sal\t8.comm\t9.mnid\t10.dpid");
+					int eid =sc.nextInt();
+					String fn = sc.next();
+					String ln = sc.next();
+					String em = sc.next();
+					String phn = sc.next();
+					String jid = sc.next();
+					int sal = sc.nextInt();
+					
+					int comm = sc.nextInt();
+					
+					int mgrid = sc.nextInt();
+					
+					int dptid = sc.nextInt();
+					String Hire_Date =String.valueOf(java.time.LocalDate.now());
+					PreparedStatement pdst;
+					  pdst = conn.prepareStatement("insert into employees values(?,?,?,?,?,?,?,?,?,?,?)");
+					  pdst.setInt(1,eid);
+					  pdst.setString(2,fn);
+					  pdst.setString(3,ln);
+					  pdst.setString(4,em);
+					  pdst.setString(5,phn);
+					  pdst.setString(6,Hire_Date);
+					  pdst.setString(7,jid);
+					  pdst.setInt(8,sal);
+					  pdst.setInt(9,comm);
+					  pdst.setInt(10,mgrid);
+					  pdst.setInt(11,dptid);
+					  int i=pdst.executeUpdate();  
+					  
+//					
+					
+		
+				if(i>0)
+				
+				{
+					System.out.println("Inserted!!");
+				}
+				else
+				{
+					System.out.println("Unable to insert");
+				}
+//				
+				break;
+			case 4 : System.out.println("Enter the employee id to change first_name");
+					 id = sc.nextInt();
+					 sc.nextLine();
+					 name = sc.next();
+					
+			         Statement statement = conn.createStatement();
+			         PreparedStatement preparedStatement = conn.prepareStatement("UPDATE employees SET first_name=? WHERE employee_id = ?");
+			         preparedStatement.setString(1, name);
+			         
+			         preparedStatement.setInt(2, id);
+			         int updateCount = preparedStatement.executeUpdate();
+			          
+			     
+			           if(updateCount>0)
+						{
+							System.out.println("updated!!");
+						}
+						else
+						{
+							System.out.println("Unable to update");
+						}
+			         break;
+			case 5 : System.exit(0);
+			
+
+					  
+			}
+		}
+		
+	}
+
+}
